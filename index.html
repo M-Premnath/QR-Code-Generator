@@ -9,6 +9,10 @@
 </head>
 
 <body>
+    <div class="heading">
+        <h1>QR Code Generator</h1>
+        <p>Enter your <strong>Text</strong> or <strong>Url</strong> to convert into QR Code</p>
+    </div>
     <div class="container">
         <p>Enter your text or url</p>
         <input type="text" placeholder="Text or Url" id="qrText">
@@ -26,7 +30,13 @@
 
         function generateQR(){
     if(qrText.value.length > 0){
-        qrImage.src ="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=" + qrText.value;
+        if(qrText.value.match(/^(https?:\/\/)?([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w \.-]*)*\/?$/)) {
+            // If the input is a URL, generate the QR code as usual
+            qrImage.src ="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=" + qrText.value;
+        } else {
+            // If the input is a plain text, generate a QR code in text format
+            qrImage.src ="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=TEXT:" + qrText.value;
+        }
         imgBox.classList.add("show-img");
         qrText.classList.remove('error');
     } else{
