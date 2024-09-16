@@ -51,7 +51,7 @@ body{
 #imgBox{
     width: 200px;
     border-radius: 5px;
-    max-height: 0;
+    max-height: 170px;
     overflow: hidden;
     transition: max-height 1s;
 }
@@ -102,6 +102,7 @@ body{
     #imgBox img{
         width: 180px;    
         padding: 10px;
+        max-height: 50%;
         transition: max-height 1s;
     }
     #imgBox.show-img{
