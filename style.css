@@ -21,12 +21,12 @@ body{
 }
 .container p{
     font-weight: 600;
-    font-size: 15px;
+    font-size: 20px;
     margin-bottom: 8px;
 }
 .container input{
     width:380px;
-    height: 50px;
+    height: 30px;
     border: 1px solid #494eea;
     outline: 0;
     padding: 10px ;
@@ -46,6 +46,7 @@ body{
     cursor:pointer;
     margin: 20px 0;
     font-weight: 500;
+    font-size: 15px;
 }
 #imgBox{
     width: 200px;
@@ -55,7 +56,7 @@ body{
     transition: max-height 1s;
 }
 #imgBox img{
-    width: 100%;    
+    width: 180px;    
     padding: 10px;
 }
 #imgBox.show-img{
@@ -78,4 +79,40 @@ body{
     50% { transform: translateX(0); }
     75% { transform: translateX(2px); }
     100% { transform: translateX(0); }
+}
+
+
+/* Added media query for mobile screen size */
+@media (max-width: 480px) {
+    .container{
+        width: 250px;
+    }
+    .container p{
+        font-weight: 600;
+        font-size: 20px;
+    }
+    .container input{
+        width:90%;
+        height: 30px;  
+    } 
+    .container button{
+        font-weight: 500;
+        font-size: 15px;
+    }
+    #imgBox img{
+        width: 180px;    
+        padding: 10px;
+        transition: max-height 1s;
+    }
+    #imgBox.show-img{
+        max-height: 200px;
+        margin: 10px auto;
+        border: 1px solid #d1d1d1;     
+    }
+    .show-img-container {
+        padding: 10px;
+        position: absolute;
+        font-size: small;
+        top:40%;
+      }   
 }

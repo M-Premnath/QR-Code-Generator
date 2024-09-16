@@ -39,6 +39,8 @@
                 }
                 imgBox.classList.add("show-img");
                 qrText.classList.remove('error');
+                const container = imgBox.parentNode.parentNode; // Get the parent element (.container)
+                container.classList.add("show-img-container"); // Add a class to the parent element
                 // Change the button text to "Download QR Code"
                 if (imgBox.classList.contains("show-img")) {
                     qrButton.textContent = "Download QR Code";
