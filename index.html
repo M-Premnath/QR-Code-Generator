@@ -21,32 +21,55 @@
             <img src="" id="qrImage">
         </div>
 
-        <button onclick="generateQR()">Generate QR Code</button>
+        <button id="qrButton" onclick="generateQR()">Generate QR Code</button>
     </div>
     <script>
         let imgBox = document.getElementById("imgBox");
         let qrImage = document.getElementById("qrImage");
         let qrText = document.getElementById("qrText");
 
-        function generateQR(){
-    if(qrText.value.length > 0){
-        if(qrText.value.match(/^(https?:\/\/)?([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w \.-]*)*\/?$/)) {
-            // If the input is a URL, generate the QR code as usual
-            qrImage.src ="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=" + qrText.value;
-        } else {
-            // If the input is a plain text, generate a QR code in text format
-            qrImage.src ="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=TEXT:" + qrText.value;
+        function generateQR() {
+            if (qrText.value.length > 0) {
+                if (qrText.value.match(/^(https?:\/\/)?([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w \.-]*)*\/?$/)) {
+                    // If the input is a URL, generate the QR code as usual
+                    qrImage.src = "https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=" + qrText.value;
+                } else {
+                    // If the input is a plain text, generate a QR code in text format
+                    qrImage.src = "https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=TEXT:" + qrText.value;
+                }
+                imgBox.classList.add("show-img");
+                qrText.classList.remove('error');
+                // Change the button text to "Download QR Code"
+                if (imgBox.classList.contains("show-img")) {
+                    qrButton.textContent = "Download QR Code";
+                    qrButton.onclick = downloadQRCode;}
+            } else {
+                qrText.classList.add('error');
+                imgBox.classList.remove("show-img");
+                setTimeout(() => {
+                    qrText.classList.remove('error');
+                }, 1000);
+            }
         }
-        imgBox.classList.add("show-img");
-        qrText.classList.remove('error');
-    } else{
-        qrText.classList.add('error');
-        imgBox.classList.remove("show-img");
-        setTimeout(()=>{
-            qrText.classList.remove('error');
-        }, 1000);
-    }
+        function downloadQRCode() {
+    const qrImageSrc = qrImage.src;
+    const img = new Image();
+    img.crossOrigin = 'anonymous'; // Add this line to avoid CORS issues
+    img.onload = function() {
+        const canvas = document.createElement('canvas');
+        canvas.width = img.width;
+        canvas.height = img.height;
+        const ctx = canvas.getContext('2d');
+        ctx.drawImage(img, 0, 0);
+        const dataURL = canvas.toDataURL('image/png');
+        const link = document.createElement('a');
+        link.href = dataURL;
+        link.download = 'qr_code.png';
+        link.click();
+    };
+    img.src = qrImageSrc;
 }
+
         // Add event listener to qrText input field
         qrText.addEventListener("keypress", function (event) {
             if (event.key === "Enter") {
